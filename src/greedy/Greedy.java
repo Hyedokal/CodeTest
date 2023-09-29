@@ -1,6 +1,8 @@
 package greedy;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 /*
 * 준규가 소유한 동전은 총 N종류이고, 각 동전의 개수가 많다.
@@ -28,5 +30,6 @@ public class Greedy {
         }
         System.out.println(count);
     }
+
 
 }
