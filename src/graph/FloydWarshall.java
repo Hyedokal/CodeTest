@@ -1,66 +1,62 @@
 package graph;
-/* 백준 1058 (실버 2)
-* 지민이는 세계에서 가장 유명한 사람이 누구인지 궁금해졌다. 가장 유명한 사람을 구하는 방법은 각 사람의 2-친구를 구하면 된다.
-* 어떤 사람 A가 또다른 사람 B의 2-친구가 되기 위해선, 두 사람이 친구이거나, A와 친구이고, B와 친구인 C가 존재해야 된다.
-* 여기서 가장 유명한 사람은 2-친구의 수가 가장 많은 사람이다. 가장 유명한 사람의 2-친구의 수를 출력하는 프로그램을 작성하시오.
-*
-* A와 B가 친구면, B와 A도 친구이고, A와 A는 친구가 아니다.
+/* 백준 11404 (골드 4)
+* n(2 ≤ n ≤ 100)개의 도시가 있다. 그리고 한 도시에서 출발하여 다른 도시에 도착하는 m(1 ≤ m ≤ 100,000)개의 버스가 있다.
+* 각 버스는 한 번 사용할 때 필요한 비용이 있다.
+* 모든 도시의 쌍 (A, B)에 대해서 도시 A에서 B로 가는데 필요한 비용의 최솟값을 구하는 프로그램을 작성하시오.
 */
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class FloydWarshall {
-    static int N;  //사람 수
-    static int[][] isFriend;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        isFriend = new int[N][N]; // 리스트 선언
-        //인접행렬 초기화
-        for(int i=0; i<N; i++){
-            for(int j=0; j<N; j++){
-                if(i!=j){
-                    isFriend[i][j] = Integer.MAX_VALUE;
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
+        int[][] distance = new int[N+1][N+1];
+        //인접 행렬 초기화
+        for(int i=0; i<N+1; i++){
+            for(int j=0; j<N+1; j++){
+                if( i != j ){
+                    distance[i][j] = 999999999;
                 }
             }
         }
-        //그래프 데이터 저장
-        for(int i=0; i<N; i++){
-            String[] s = br.readLine().split("");
-            for(int j=0; j<N; j++){
-                if(s[j].equals("Y")){
-                    isFriend[i][j] = 1;
-                }
+        //노선 정보 update
+        for(int i=0; i<M; i++){
+            String[] str = br.readLine().split(" ");
+            int start = Integer.parseInt(str[0]);
+            int end = Integer.parseInt(str[1]);
+            int value = Integer.parseInt(str[2]);
+            if(distance[start][end] > value){   //기존의 비용이 새로 들어온 비용보다 크면, 새로 들어온 비용으로 update.
+                distance[start][end] = value;
             }
         }
 
-        //점화식 사용
-        for(int k=0; k<N; k++){             //경유지
-            for(int s=0; s<N; s++){         //출발지
-                for(int e=0; e<N; e++){     //도착지
-                    isFriend[s][e] = Math.min(isFriend[s][e], isFriend[s][k]+isFriend[k][e]);
+        //플로이드-워셜 알고리즘 수행
+        for(int k=1; k<N+1; k++){           //경유지 K
+            for(int s=1; s<N+1; s++){       //출발지 S
+                for(int e=1; e<N+1; e++){   //도착지 E
+                    if (distance[s][e] > distance[s][k]+distance[k][e]){
+                        distance[s][e] = distance[s][k]+distance[k][e];
+                    }
                 }
             }
         }
-
-        int[] count = new int[N];   //2-친구 수 저장
-        int answer = 0;
-        for(int i=0; i<N; i++){
-            for(int j=0; j<N; j++){
-                if(isFriend[i][j] <= 2){
-                    count[i]++;
+        //정답 출력
+        for(int i=1; i<N+1; i++){
+            for(int j=1; j<N+1; j++){
+                if(distance[i][j] == 999999999){
+                    System.out.print(0 + " ");
+                } else{
+                    System.out.print(distance[i][j] + " ");
                 }
             }
-            answer = Math.max(answer, count[i]);
+            System.out.println();
         }
-        System.out.println(answer);
-
-
-
-
     }
 
 }
