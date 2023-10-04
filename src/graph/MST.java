@@ -20,14 +20,14 @@ public class MST {
     static int[] parent; //대표 노드 배열
     static int V; //노드 개수
     static int E; //에지 개수
-    static PriorityQueue<> PQ; //우선순위 큐
+    //static PriorityQueue<> PQ; //우선순위 큐
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         V = Integer.parseInt(st.nextToken());
         E = Integer.parseInt(st.nextToken());
         parent = new int[V+1];
-        PQ = new PriorityQueue();   //우선순위 큐
+        //PQ = new PriorityQueue();   //우선순위 큐
         for(int i=0; i<V+1; i++){
             parent[i] = i;  //대표노드 배열 초기화
         }
