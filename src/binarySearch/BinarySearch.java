@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /*
 *   N개의 정수가 주어져 있을 때, 이 안에 X라는 정수가 존재하는지 알아내는 프로그램 작성.
-*   난이도: 실버 5
+*   난이도: 실버 4
 */
 public class BinarySearch {
     public static void main(String[] args){
