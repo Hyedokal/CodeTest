@@ -38,7 +38,7 @@ public class BFS {
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{i, j});
         while(!queue.isEmpty()){
-            int now[] = queue.poll(); //현재의 자리를 뽑음.
+            int[] now = queue.poll(); //현재의 자리를 뽑음.
             visited[i][j] = true;
             //상하좌우 구현.
             for(int k=0; k<4; k++){
